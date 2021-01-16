@@ -14,6 +14,7 @@ public class Movie {
     private String release;
     private String description;
     private String rating;
+    private String avgRating;
 
     public Movie() {
     }
@@ -70,4 +71,19 @@ public class Movie {
     public void setRating(String rating) {
         this.rating = rating;
     }
+
+    public String getAvgRating() {
+
+       String[] ratings =  getRating().split(",");
+       double avgVal=0;
+        for (String rating1 : ratings) {
+            int val =Integer.parseInt(rating1);
+            avgVal+=val;
+        }
+        avgVal = avgVal/ratings.length;
+        return String.valueOf(avgVal);
+    }
+
+
+
 }
