@@ -32,7 +32,7 @@ public class MovieController {
 
     @PutMapping("/api/movies")
     @ResponseStatus(HttpStatus.OK)
-    public Movie updateMovieRating(@RequestBody Movie movie){
+    public Movie updateMovieRating(@RequestBody Movie movie) {
         return movieService.updateMovie(movie);
     }
 }

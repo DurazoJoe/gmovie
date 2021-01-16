@@ -26,10 +26,10 @@ public class MovieService {
 
     public Movie updateMovie(Movie movie) {
         Optional<Movie> movie1 = movieRepository.findById(movie.getTitle());
-        if(movie1.get().getRating().isEmpty()) {
-            movie1.get().setRating( movie.getRating());
-        }else{
-            movie1.get().setRating( movie1.get().getRating()+","+movie.getRating());
+        if (movie1.get().getRating().isEmpty()) {
+            movie1.get().setRating(movie.getRating());
+        } else {
+            movie1.get().setRating(movie1.get().getRating() + "," + movie.getRating());
         }
         return movieRepository.save(movie1.get());
     }

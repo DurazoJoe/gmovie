@@ -40,9 +40,8 @@ public class MovieServiceTest {
         mapper = new ObjectMapper();
 
         File moviePath1 = new File(moviePath);
-        movieList =  mapper.readValue(moviePath1, new TypeReference<ArrayList<Movie>>() {
+        movieList = mapper.readValue(moviePath1, new TypeReference<ArrayList<Movie>>() {
         });
-
 
     }
 
@@ -80,7 +79,7 @@ public class MovieServiceTest {
     }
 
     @Test
-    public void serviceShouldReturnUpdatedMovie(){
+    public void serviceShouldReturnUpdatedMovie() {
 
         Optional<Movie> expectedMovie = Optional.of(getMovieByTitle("Superman Returns"));
         expectedMovie.get().setRating("5");
@@ -96,7 +95,7 @@ public class MovieServiceTest {
     }
 
     @Test
-    public void serviceShouldReturnUpdatedMovie_multipleRatings(){
+    public void serviceShouldReturnUpdatedMovie_multipleRatings() {
 
         Optional<Movie> expectedMovie = Optional.of(getMovieByTitle("Superman Returns"));
         expectedMovie.get().setRating("5");

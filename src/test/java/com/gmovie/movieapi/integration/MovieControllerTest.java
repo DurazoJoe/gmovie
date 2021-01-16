@@ -1,13 +1,11 @@
 package com.gmovie.movieapi.integration;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmovie.movieapi.model.Movie;
 import com.gmovie.movieapi.repository.MovieRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -23,8 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -52,7 +48,7 @@ public class MovieControllerTest {
     @BeforeEach
     void setUp() throws IOException {
         File moviePath1 = new File(moviePath);
-        movieList =  mapper.readValue(moviePath1, new TypeReference<ArrayList<Movie>>() {
+        movieList = mapper.readValue(moviePath1, new TypeReference<ArrayList<Movie>>() {
         });
     }
 
@@ -78,7 +74,7 @@ public class MovieControllerTest {
     }
 
     @Test
-    public void getMovieByTitle_ReturnsMovieDetails () throws Exception {
+    public void getMovieByTitle_ReturnsMovieDetails() throws Exception {
 
         Optional<Movie> expectedMovie = Optional.of(getMovieByTitle("Superman Returns"));
 
@@ -91,7 +87,7 @@ public class MovieControllerTest {
     }
 
     @Test
-    public void getMovieByTitle_ReturnsNotFound () throws Exception {
+    public void getMovieByTitle_ReturnsNotFound() throws Exception {
 
         mockMvc.perform(get("/api/movies/bad hero"))
                 .andExpect(status().isNotFound())
