@@ -63,3 +63,24 @@ sample Response if NOT found:
 -------------
 
 "The movie you're looking for was not found"
+
+-----------------------------------------------
+
+## Update movie rating for a given movie
+
+URI : /api/movies
+
+Request payload:
+ - movie title
+ - movie rating
+
+Response : Movie Details
+
+{
+"title": "The Avengers",
+"director": "Joss Whedon",
+"actors": "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth",
+"release": "2012",
+"description": "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.",
+"rating": "5"
+}

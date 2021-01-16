@@ -23,4 +23,8 @@ public class MovieService {
     public Optional<Movie> getMovieByTitle(String movieTitle) {
         return movieRepository.findById(movieTitle);
     }
+
+    public Movie updateMovie(Movie movie) {
+        return movieRepository.save(movie);
+    }
 }

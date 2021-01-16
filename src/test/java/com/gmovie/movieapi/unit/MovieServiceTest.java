@@ -34,11 +34,6 @@ public class MovieServiceTest {
     String moviePath = "src/test/java/com/gmovie/movieapi/data/movies.json";
     List<Movie> movieList;
 
-    @Test
-    public void nothing() {
-
-    }
-
     @BeforeEach
     void setUp() throws IOException {
         mapper = new ObjectMapper();
@@ -82,4 +77,29 @@ public class MovieServiceTest {
 
         assertEquals(expectedMovie, movie);
     }
+
+    @Test
+    public void serviceToReturnUpdatedMovie(){
+
+        Optional<Movie> expectedMovie = Optional.of(getMovieByTitle("Superman Returns"));
+        expectedMovie.get().setRating("5");
+        when(movieRepository.save(expectedMovie.get())).thenReturn(expectedMovie.get());
+
+        MovieService service = new MovieService(movieRepository);
+        Movie movie = getMovieByTitle("Superman Returns");
+        movie.setRating("5");
+        Movie returnedMovie = service.updateMovie(movie);
+
+        assertEquals(expectedMovie.get(), returnedMovie);
+
+    }
+
+
+
+
+
+
+
+
+
 }

@@ -8,11 +8,13 @@ import com.gmovie.movieapi.repository.MovieRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.File;
@@ -24,8 +26,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -95,6 +96,28 @@ public class MovieControllerTest {
         mockMvc.perform(get("/api/movies/bad hero"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$").value("The movie you're looking for was not found"));
+    }
+
+    @Test
+    public void updateRatingforMovie_ReturnsMovie() throws Exception {
+
+        Optional<Movie> expectedMovie = Optional.of(getMovieByTitle("Superman Returns"));
+        expectedMovie.get().setRating("5");
+
+        Movie movie = getMovieByTitle("Superman Returns");
+        movie.setRating("5");
+
+        String jsonMovie = mapper.writeValueAsString(movie);
+        when(movieRepository.save(Mockito.any(Movie.class))).thenReturn(expectedMovie.get());
+
+        mockMvc.perform(put("/api/movies")
+                .content(jsonMovie)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.title").value("Superman Returns"))
+                .andExpect(jsonPath("$.rating").value("5"));
+
     }
 
 }
