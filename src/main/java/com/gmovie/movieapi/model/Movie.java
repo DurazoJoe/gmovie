@@ -9,6 +9,7 @@ import javax.persistence.Id;
 public class Movie {
     @Id
     private String title;
+    private String director;
     private String actors;
     private String release;
     private String description;
@@ -17,8 +18,9 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String title, String actors, String release, String description, String rating) {
+    public Movie(String title, String director, String actors, String release, String description, String rating) {
         this.title = title;
+        this.director = director;
         this.actors = actors;
         this.release = release;
         this.description = description;
@@ -32,6 +34,10 @@ public class Movie {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getDirector() { return director; }
+
+    public void setDirector(String director) { this.director = director; }
 
     public String getActors() {
         return actors;

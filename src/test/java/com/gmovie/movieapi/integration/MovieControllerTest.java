@@ -1,4 +1,4 @@
-package com.gmovie.movieapi;
+package com.gmovie.movieapi.integration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -45,16 +45,14 @@ public class MovieControllerTest {
     @Autowired
     ObjectMapper mapper;
 
-    List<Movie> movieList ;
+    List<Movie> movieList;
 
     @BeforeEach
     void setUp() throws IOException {
         File moviePath1 = new File(moviePath);
         movieList =  mapper.readValue(moviePath1, new TypeReference<ArrayList<Movie>>() {
         });
-
     }
-
 
     @Test
     public void getAllMovies_returnsListOfMovies() throws Exception {
