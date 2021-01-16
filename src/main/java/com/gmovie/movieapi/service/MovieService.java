@@ -5,6 +5,7 @@ import com.gmovie.movieapi.repository.MovieRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieService {
@@ -17,5 +18,9 @@ public class MovieService {
 
     public List<Movie> getAllMovies() {
         return movieRepository.findAll();
+    }
+
+    public Optional<Movie> getMovieByTitle(String movieTitle) {
+        return movieRepository.findById(movieTitle);
     }
 }

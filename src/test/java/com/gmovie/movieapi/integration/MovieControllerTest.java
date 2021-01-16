@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -54,6 +55,15 @@ public class MovieControllerTest {
         });
     }
 
+    private Movie getMovieByTitle(String title) {
+        for (Movie movie : movieList) {
+            if (movie.getTitle().equals(title)) {
+                return movie;
+            }
+        }
+        return new Movie();
+    }
+
     @Test
     public void getAllMovies_returnsListOfMovies() throws Exception {
 
@@ -64,6 +74,27 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$.length()").value(3))
                 .andExpect(jsonPath("$.[0].title").value("The Avengers"));
 
+    }
+
+    @Test
+    public void getMovieByTitle_ReturnsMovieDetails () throws Exception {
+
+        Optional<Movie> expectedMovie = Optional.of(getMovieByTitle("Superman Returns"));
+
+        when(movieRepository.findById("Superman Returns")).thenReturn(expectedMovie);
+
+        mockMvc.perform(get("/api/movies/Superman Returns"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Superman Returns"))
+                .andExpect(jsonPath("$.director").value("Bryan Singer"));
+    }
+
+    @Test
+    public void getMovieByTitle_ReturnsNotFound () throws Exception {
+
+        mockMvc.perform(get("/api/movies/bad hero"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$").value("The movie you're looking for was not found"));
     }
 
 }

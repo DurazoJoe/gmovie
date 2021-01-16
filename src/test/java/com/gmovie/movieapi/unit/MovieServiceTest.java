@@ -7,19 +7,16 @@ import com.gmovie.movieapi.repository.MovieRepository;
 import com.gmovie.movieapi.service.MovieService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.TestComponent;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -62,5 +59,27 @@ public class MovieServiceTest {
         List<Movie> allMovies = service.getAllMovies();
 
         assertEquals(movieList, allMovies);
+    }
+
+    private Movie getMovieByTitle(String title) {
+        for (Movie movie : movieList) {
+            if (movie.getTitle().equals(title)) {
+                return movie;
+            }
+        }
+        return new Movie();
+    }
+
+    @Test
+    public void serviceShouldReturnMovieDetails() {
+        Optional<Movie> expectedMovie = Optional.of(getMovieByTitle("Superman Returns"));
+
+        when(movieRepository.findById("Superman Returns")).thenReturn(expectedMovie);
+
+        MovieService service = new MovieService(movieRepository);
+
+        Optional<Movie> movie = service.getMovieByTitle("Superman Returns");
+
+        assertEquals(expectedMovie, movie);
     }
 }
