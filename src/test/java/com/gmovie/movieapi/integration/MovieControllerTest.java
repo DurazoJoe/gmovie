@@ -120,4 +120,30 @@ public class MovieControllerTest {
 
     }
 
+    @Test
+    public void updateRatingforMovie_multipleratings() throws Exception {
+
+        Optional<Movie> expectedMovie = Optional.of(getMovieByTitle("Superman Returns"));
+        expectedMovie.get().setRating("5");
+
+        Movie movie = new Movie();
+        movie.setTitle("Superman Returns");
+        movie.setRating("3");
+
+        String jsonMovie = mapper.writeValueAsString(movie);
+
+        when(movieRepository.findById("Superman Returns")).thenReturn(expectedMovie);
+
+        when(movieRepository.save(Mockito.any(Movie.class))).thenReturn(expectedMovie.get());
+
+        mockMvc.perform(put("/api/movies")
+                .content(jsonMovie)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Superman Returns"))
+                .andExpect(jsonPath("$.avgRating").value("4.0"));
+
+    }
+
+
 }
