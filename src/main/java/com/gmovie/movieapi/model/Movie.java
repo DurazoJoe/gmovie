@@ -38,13 +38,9 @@ public class Movie {
         this.title = title;
     }
 
-    public String getDirector() {
-        return director;
-    }
+    public String getDirector() { return director; }
 
-    public void setDirector(String director) {
-        this.director = director;
-    }
+    public void setDirector(String director) { this.director = director; }
 
     public String getActors() {
         return actors;
@@ -80,13 +76,13 @@ public class Movie {
 
     public String getAvgRating() {
 
-        String[] ratings = getRating().split(",");
-        double avgVal = 0;
+       String[] ratings =  getRating().split(",");
+       double avgVal=0;
         for (String rating1 : ratings) {
-            int val = Integer.parseInt(rating1);
-            avgVal += val;
+            int val =Integer.parseInt(rating1);
+            avgVal+=val;
         }
-        avgVal = avgVal / ratings.length;
+        avgVal = avgVal/ratings.length;
         return String.valueOf(avgVal);
     }
 
