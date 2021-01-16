@@ -1,15 +1,3 @@
-# GMovie
-
-## Get all movies that are available
-------------------------------------
-URI : /api/movies
-
-Request :
-
-Response : 200 oK
-
-Sample Response :
--------------
 [
   {
     "title": "The Avengers",
