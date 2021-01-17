@@ -7,7 +7,6 @@ import com.gmovie.movieapi.repository.MovieRepository;
 import com.gmovie.movieapi.service.MovieService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -80,11 +79,11 @@ public class MovieServiceTest {
     }
 
     @Test
-    public void serviceShouldReturnUpdatedMovie(){
+    public void serviceToReturnUpdatedMovie(){
 
         Optional<Movie> expectedMovie = Optional.of(getMovieByTitle("Superman Returns"));
         expectedMovie.get().setRating("5");
-        when(movieRepository.save(Mockito.any(Movie.class))).thenReturn(expectedMovie.get());
+        when(movieRepository.save(expectedMovie.get())).thenReturn(expectedMovie.get());
 
         MovieService service = new MovieService(movieRepository);
         Movie movie = getMovieByTitle("Superman Returns");
@@ -95,26 +94,12 @@ public class MovieServiceTest {
 
     }
 
-    @Test
-    public void serviceShouldReturnUpdatedMovie_multipleRatings(){
 
-        Optional<Movie> expectedMovie = Optional.of(getMovieByTitle("Superman Returns"));
-        expectedMovie.get().setRating("5");
 
-        when(movieRepository.findById("Superman Returns")).thenReturn(expectedMovie);
 
-        when(movieRepository.save(Mockito.any(Movie.class))).thenReturn(expectedMovie.get());
 
-        MovieService service = new MovieService(movieRepository);
-        Movie movie = new Movie();
-        movie.setTitle("Superman Returns");
-        movie.setRating("3");
 
-        Movie returnedMovie = service.updateMovie(movie);
 
-        assertEquals("4.0", returnedMovie.getAvgRating());
-
-    }
 
 
 }
