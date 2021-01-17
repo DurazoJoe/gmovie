@@ -4,7 +4,6 @@ import lombok.Builder;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.ArrayList;
 
 @Entity
 public class Movie {
@@ -16,7 +15,6 @@ public class Movie {
     private String description;
     private String rating;
     private String avgRating;
-    private ArrayList<String> reviews;
 
     public Movie() {
     }
@@ -86,7 +84,6 @@ public class Movie {
         return String.valueOf(avgVal);
     }
 
-    public void setReview(String review) {
-        this.reviews.add(review);
-    }
+
+
 }

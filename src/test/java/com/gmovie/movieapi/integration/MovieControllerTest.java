@@ -144,4 +144,6 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$.avgRating").value("4.0"));
 
     }
+
+
 }
